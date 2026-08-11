@@ -11,12 +11,16 @@ back office, on top of a real-time tracking and notifications layer.
 apps/
   web/        Next.js 14 (App Router) customer site + driver/fleet/corporate/admin portals
   api/        NestJS 10 REST + WebSocket API, Prisma ORM, PostgreSQL
+  mobile/     Expo/React Native demo app (core customer booking flow) — see apps/mobile/README.md
 packages/
-  shared/     Shared TypeScript types, enums, and pricing constants used by both apps
+  shared/     Shared TypeScript types, enums, and pricing constants used by both web and api
 docker-compose.yml   Local Postgres + Mailhog (SMTP test inbox) for development
 ```
 
-Package management is via **pnpm workspaces** (`pnpm-workspace.yaml`).
+Package management for `apps/web`, `apps/api` and `packages/shared` is via **pnpm workspaces**
+(`pnpm-workspace.yaml`). `apps/mobile` is a standalone Expo project managed with npm — see
+`apps/mobile/README.md` for why, and for how to build it into an installable Android APK (that
+build step needs a machine with normal internet access; it can't be produced from this repo alone).
 
 ## Feature coverage
 

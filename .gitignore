@@ -36,3 +36,11 @@ Thumbs.db
 
 # Docker
 docker-data/
+
+# Expo / React Native (apps/mobile)
+.expo/
+apps/mobile/android/
+apps/mobile/ios/
+*.apk
+*.aab
+*.ipa

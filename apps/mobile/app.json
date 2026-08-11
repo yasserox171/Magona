@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Magona",
+    "slug": "magona",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#1857f0"
+    },
+    "android": {
+      "package": "com.magona.app",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#1857f0"
+      },
+      "permissions": ["INTERNET", "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
+    },
+    "ios": {
+      "bundleIdentifier": "com.magona.app"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "REPLACE_WITH_YOUR_EAS_PROJECT_ID"
+      }
+    }
+  }
+}

@@ -1,3 +1,7 @@
 packages:
   - "apps/*"
   - "packages/*"
+  # apps/mobile is an Expo/React Native project managed independently with npm
+  # (Metro's bundler resolution doesn't play well with pnpm's symlinked
+  # node_modules) — see apps/mobile/README.md.
+  - "!apps/mobile"

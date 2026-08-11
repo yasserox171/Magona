@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "description": "Magona - ground transportation booking platform (airport transfers, private cars, taxis, corporate rides)",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev": "pnpm --parallel --filter ./apps/* run dev",
     "dev:web": "pnpm --filter web run dev",
