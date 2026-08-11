@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: magona-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: magona
+      POSTGRES_PASSWORD: magona
+      POSTGRES_DB: magona
+    ports:
+      - "5432:5432"
+    volumes:
+      - magona-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U magona"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: magona-mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
+
+volumes:
+  magona-postgres-data:

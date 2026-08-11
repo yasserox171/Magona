@@ -1,0 +1,118 @@
+export enum UserRole {
+  CUSTOMER = "CUSTOMER",
+  DRIVER = "DRIVER",
+  FLEET_ADMIN = "FLEET_ADMIN",
+  CORPORATE_ADMIN = "CORPORATE_ADMIN",
+  ADMIN = "ADMIN",
+}
+
+export enum VehicleCategory {
+  ECONOMY = "ECONOMY",
+  BUSINESS = "BUSINESS",
+  PREMIUM = "PREMIUM",
+  VAN = "VAN",
+}
+
+export enum RideType {
+  AIRPORT_PICKUP = "AIRPORT_PICKUP",
+  AIRPORT_DROPOFF = "AIRPORT_DROPOFF",
+  POINT_TO_POINT = "POINT_TO_POINT",
+  HOURLY = "HOURLY",
+}
+
+export enum BookingStatus {
+  PENDING = "PENDING",
+  CONFIRMED = "CONFIRMED",
+  DRIVER_ASSIGNED = "DRIVER_ASSIGNED",
+  DRIVER_EN_ROUTE = "DRIVER_EN_ROUTE",
+  DRIVER_ARRIVED = "DRIVER_ARRIVED",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
+  CANCELLED = "CANCELLED",
+  NO_SHOW = "NO_SHOW",
+}
+
+export enum PaymentStatus {
+  PENDING = "PENDING",
+  AUTHORIZED = "AUTHORIZED",
+  PAID = "PAID",
+  FAILED = "FAILED",
+  REFUNDED = "REFUNDED",
+  PARTIALLY_REFUNDED = "PARTIALLY_REFUNDED",
+}
+
+export enum PaymentMethodType {
+  CARD = "CARD",
+  INVOICE = "INVOICE",
+  CORPORATE_ACCOUNT = "CORPORATE_ACCOUNT",
+}
+
+export enum DriverStatus {
+  OFFLINE = "OFFLINE",
+  AVAILABLE = "AVAILABLE",
+  BUSY = "BUSY",
+  ON_BREAK = "ON_BREAK",
+}
+
+export enum DriverApprovalStatus {
+  PENDING_REVIEW = "PENDING_REVIEW",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+  SUSPENDED = "SUSPENDED",
+}
+
+export enum VehicleStatus {
+  ACTIVE = "ACTIVE",
+  MAINTENANCE = "MAINTENANCE",
+  INACTIVE = "INACTIVE",
+}
+
+export enum FleetStatus {
+  PENDING_APPROVAL = "PENDING_APPROVAL",
+  ACTIVE = "ACTIVE",
+  SUSPENDED = "SUSPENDED",
+}
+
+export enum NotificationChannel {
+  EMAIL = "EMAIL",
+  PUSH = "PUSH",
+  SMS = "SMS",
+}
+
+export enum NotificationType {
+  ACCOUNT_WELCOME = "ACCOUNT_WELCOME",
+  BOOKING_CONFIRMED = "BOOKING_CONFIRMED",
+  BOOKING_MODIFIED = "BOOKING_MODIFIED",
+  BOOKING_CANCELLED = "BOOKING_CANCELLED",
+  DRIVER_ASSIGNED = "DRIVER_ASSIGNED",
+  DRIVER_EN_ROUTE = "DRIVER_EN_ROUTE",
+  DRIVER_ARRIVED = "DRIVER_ARRIVED",
+  RIDE_STARTED = "RIDE_STARTED",
+  RIDE_COMPLETED = "RIDE_COMPLETED",
+  PAYMENT_RECEIPT = "PAYMENT_RECEIPT",
+  INVOICE_ISSUED = "INVOICE_ISSUED",
+  FLIGHT_DELAY_DETECTED = "FLIGHT_DELAY_DETECTED",
+}
+
+export enum InvoiceStatus {
+  DRAFT = "DRAFT",
+  ISSUED = "ISSUED",
+  PAID = "PAID",
+  OVERDUE = "OVERDUE",
+  VOID = "VOID",
+}
+
+export enum SupportedCurrency {
+  EUR = "EUR",
+  USD = "USD",
+  GBP = "GBP",
+  AED = "AED",
+}
+
+export enum SupportedLocale {
+  EN = "en",
+  DE = "de",
+  FR = "fr",
+  ES = "es",
+  AR = "ar",
+}
