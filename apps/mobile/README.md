@@ -2,14 +2,29 @@
 
 A React Native (Expo) demo app covering the core customer booking flow — sign in/register, search
 & quote, vehicle selection, checkout (booked on invoice — see note below), booking confirmation
-and status, and a bookings list. It talks to the same NestJS API as `apps/web`.
+and status, and a bookings list.
+
+**This build runs entirely on-device, with no backend required.** `src/api.ts` implements a small
+local mock of the same endpoints the real NestJS API (`apps/api`) exposes — auth, quotes (using
+the same pricing formula as `packages/shared/src/pricing.ts`), and bookings — backed by
+`AsyncStorage` so accounts and bookings persist across app restarts. Booking status progresses
+automatically over a few minutes after you book (confirmed → driver assigned → en route → arrived
+→ in progress → completed) so the tracking screens feel alive without any server. See
+`src/demo/store.ts` and `src/demo/pricing.ts` for the implementation, and `src/api.ts` for the
+request router. Sign in with the seeded demo account: `customer@magona.com` / `Password123!` (or
+register a new one — it's stored locally on the device).
+
+If you'd rather point the app at the real API instead (e.g. to exercise the actual backend,
+Stripe payments, driver assignment, etc.), see git history for the previous network-backed version
+of `src/api.ts`, or re-implement `api.get/post/patch` as thin `fetch` wrappers against
+`EXPO_PUBLIC_API_URL` — every screen calls through that same `api` object, so nothing else needs
+to change.
 
 It's a **demo build**, not a port of the entire web platform: driver/fleet/admin/corporate
 portals, in-app card payment, live map tracking and push notifications are not included here
-(the API supports all of that already — see the root README and `apps/web` for the full feature
-set). In-app card payment specifically needs the Stripe React Native SDK
-(`@stripe/stripe-react-native`), which isn't wired up in this demo, so checkout always books on
-invoice.
+(the full API supports all of that — see the root README and `apps/web`). In-app card payment
+specifically needs the Stripe React Native SDK (`@stripe/stripe-react-native`), which isn't wired
+up in this demo, so checkout always books on invoice.
 
 ## Why this isn't part of the pnpm workspace
 
@@ -17,18 +32,18 @@ Metro (React Native's bundler) doesn't resolve pnpm's symlinked `node_modules` r
 app is a standalone project managed with **npm**, independent from the `apps/web`/`apps/api` pnpm
 workspace. Run all commands below from inside `apps/mobile`.
 
-## I can't build the APK for you here
+## Getting a built APK
 
-This project was built inside a sandboxed cloud session whose network policy blocks both routes to
-actually compile an Android app:
+Sandboxed cloud sessions typically can't compile an Android app themselves — their network policy
+blocks both `dl.google.com` (Android SDK, needed for a local Gradle build) and `expo.dev`/
+`api.expo.dev` (Expo's cloud build service, EAS Build). Instead, `.github/workflows/build-android-apk.yml`
+at the repo root builds the APK on GitHub's own runners (which have normal internet access) and
+publishes it as a GitHub Release asset (`app-release.apk` / `app-debug.apk`) — see the repo's
+Releases page. It runs automatically on every push to `apps/mobile/**`, or on demand via
+"Run workflow" in the Actions tab.
 
-- `dl.google.com` (needed to install the Android SDK for a local build) → blocked
-- `expo.dev` / `api.expo.dev` (Expo's cloud build service, EAS Build) → blocked
-
-So there's no APK file or download link from this session — what's here is the complete,
-verified-working app source (typechecks cleanly and the Metro/Android bundle builds successfully:
-`npx expo export --platform android`). You'll build the actual `.apk` yourself, from a machine or
-CI runner with normal internet access, using one of the two options below. Both are quick.
+To build locally yourself instead, from a machine or CI runner with normal internet access, use
+one of the two options below.
 
 ## Option A — EAS Build (cloud, easiest, no Android Studio needed)
 
@@ -62,13 +77,12 @@ release `.apk` file you can hand to someone else, run `cd android && ./gradlew a
 after `expo run:android` has generated the `android/` folder once — the output lands at
 `android/app/build/outputs/apk/release/app-release.apk`.
 
-## Running against the API
+## Note on `EXPO_PUBLIC_API_URL` / `.env.example`
 
-1. Start the API and Postgres as described in the root README (`docker compose up -d`, then
-   `pnpm --filter api prisma:migrate && pnpm --filter api prisma:seed && pnpm dev:api`).
-2. Point `EXPO_PUBLIC_API_URL` at wherever that API is reachable from your device/emulator (see
-   `.env.example` for the emulator/physical-device/deployed cases).
-3. Sign in with a seeded demo account, e.g. `customer@magona.com` / `Password123!`.
+These are vestigial in the current on-device-demo build — `src/api.ts` no longer makes network
+requests, so nothing reads that variable. They're left in place (and still consumed by
+`eas.json`'s `apk` build profile) for anyone who restores the network-backed `api.ts` to run
+against the real `apps/api` backend; see the note at the top of this file.
 
 ## Live development (no APK needed)
 

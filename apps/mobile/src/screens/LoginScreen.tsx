@@ -25,7 +25,7 @@ export function LoginScreen({ navigation }: Props) {
       const tokens = await api.post<AuthTokens>("/auth/login", { email, password }, { auth: false });
       await signIn(tokens);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Unable to sign in. Check the API is running and reachable.");
+      setError(err instanceof ApiError ? err.message : "Unable to sign in. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,8 @@ export function LoginScreen({ navigation }: Props) {
         </View>
 
         <Text style={styles.hint}>
-          Demo account: customer@magona.com / Password123!{"\n"}(seed the API first with `pnpm prisma:seed`)
+          Demo account: customer@magona.com / Password123!{"\n"}This build runs entirely on-device — no backend
+          needed.
         </Text>
 
         <Button title="Create an account" variant="outline" onPress={() => navigation.navigate("Register")} />
