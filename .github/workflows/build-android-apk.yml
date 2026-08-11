@@ -1,7 +1,12 @@
 name: Build Android APK
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      api_url:
+        description: "Base API URL to bake into the app (EXPO_PUBLIC_API_URL)"
+        required: false
+        default: "http://127.0.0.1:4000/api/v1"
   push:
     branches:
       - claude/ground-transportation-booking-r3fgts
@@ -18,6 +23,8 @@ jobs:
     defaults:
       run:
         working-directory: apps/mobile
+    env:
+      EXPO_PUBLIC_API_URL: ${{ github.event.inputs.api_url || 'http://127.0.0.1:4000/api/v1' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
