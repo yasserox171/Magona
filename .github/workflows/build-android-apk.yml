@@ -9,6 +9,9 @@ on:
       - "apps/mobile/**"
       - ".github/workflows/build-android-apk.yml"
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -67,3 +70,13 @@ jobs:
           name: magona-android-apk
           path: apps/mobile/android/app/build/outputs/apk/**/*.apk
           if-no-files-found: error
+
+      - name: Publish APK as GitHub Release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-build-${{ github.run_number }}
+          name: Magona Android APK (build ${{ github.run_number }})
+          body: Automated Android APK build from commit ${{ github.sha }}.
+          files: apps/mobile/android/app/build/outputs/apk/**/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
